@@ -9,7 +9,7 @@ services:
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
     env_file:
       - .env
-    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8_unicode_ci #UTF-8をデフォルトに。
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci #UTF-8をデフォルトに。
     volumes:
       - mysql_data:/var/lib/mysql  
     healthcheck:
