@@ -1,0 +1,37 @@
+services:
+  db:
+    container_name: MySQL
+    image: mysql:8.0
+    platform: linux/x86_64
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+    env_file:
+      - .env
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci #UTF-8をデフォルトに。
+    volumes:
+      - mysql_data:/var/lib/mysql  
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "${MYSQL_USER}", "-p${MYSQL_PASSWORD}"]
+      interval: 10s
+      timeout: 10s
+      retries: 3
+      start_period: 30s  
+  web:
+    container_name: Django
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: python3 manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        # dbのヘルスチェックが終わってからappを起動させる
+        condition: service_healthy
+volumes:
+  mysql_data:
