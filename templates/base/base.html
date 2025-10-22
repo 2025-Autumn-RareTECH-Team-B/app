@@ -1,0 +1,31 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="長期目標を設定し、人生設計をするアプリです">
+        <title>{% block title %}Habi{% endblock %}</title>
+
+        <!------ Googleフォント(パフォーマンス向上) ------->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+        <!------ Googleフォント ------->
+        <link href="https://fonts.googleapis.com/css2?family=ABeeZee&family=Beau+Rivage&display=swap" rel="stylesheet">
+
+        <!------- CSSリンク ---->
+        <link rel="stylesheet" href="{% static 'css/color.css' %}">
+        {% block css %}
+        {% endblock %}
+
+        <!------- tailwind CSSを使用する ------>
+        <script src="https://cdn.tailwindcss.com"></script>
+    </head>
+
+    <body>
+        {% block content %}
+        {% endblock %}
+    </body>
+</html>
