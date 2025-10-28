@@ -25,6 +25,8 @@ INSTALLED_APPS = [
     'app.steps.apps.StepsConfig',
 ]
 
+AUTH_USER_MODEL = 'accounts.User'
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
