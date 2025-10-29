@@ -13,8 +13,7 @@ User = get_user_model()
 #   ログイン画面
 # -----------------------
 def login(request):
-    return render(request, 'login.html')
-
+    return render(request, "login.html")
 
 # -----------------------
 #   サインアップ（新規登録）
@@ -38,7 +37,7 @@ def signup(request):
     password2 = request.POST.get("password2", "")
 
     # 生の誕生日文字列（例: '2024-10-10'）
-    b_raw = request.POST.get("birthday", "")
+    b_raw = request.POST.get("birthday", "").strip()
 
     # メールアドレスの正規表現（pattern）
     # ユーザー名部分：英数字と「_ . + -」を1文字以上
@@ -72,12 +71,13 @@ def signup(request):
         return render(request, "signup.html", ctx)
 
     # ---- 誕生日のパース処理 ----
-    # データベースに保存するときの birthday の初期値を None にする
-    # （未入力の場合はこれをそのまま保存する）
-    birthday = None
-
     # ユーザーが誕生日を選択している場合（=b_raw が "" ではない場合）
     # もしユーザーが誕生日を入力していた場合だけ処理する
+
+    if not b_raw:
+        messages.error(request, "空のフォームがあります。")
+        return render(request, "signup.html", ctx)
+
     if b_raw:
         try:
             # 文字列 → date型に変換
@@ -90,7 +90,7 @@ def signup(request):
             min_date = today - timedelta(days=365 * 120)  # 120歳まで
             max_date = today  # 未来日はNG
 
-            # ---- 範囲チェック ----
+            # ---- 範囲チェック ----            
             if birthday > max_date:
                 messages.error(request, "未来の日付は選択できません。")
                 return render(request, "signup.html", ctx)
@@ -103,21 +103,14 @@ def signup(request):
             messages.error(request, "誕生日の形式を正しく選択してください。")
             return render(request, "signup.html", ctx)
 
-    else:
-        # 未入力の場合は None のままでOK
-        birthday = None
-
     # --------------------------
     #      ユーザー新規作成
     # --------------------------
     new_user = User(
         username=name,
         email=email,
+        birthday=birthday,
     )
-
-    # Userモデルに birthday フィールドがある場合のみセットする
-    if hasattr(new_user, "birthday"):
-        new_user.birthday = birthday
 
     # パスワードをハッシュ化して保存する
     new_user.set_password(password1)
