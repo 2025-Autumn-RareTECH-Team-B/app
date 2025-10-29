@@ -1,29 +1,18 @@
 {
   "folders": [
     {
-      "path": "."
+      "path": ".."
     }
   ],
-
   "settings": {
-    "editor.guides.bracketPairs": true,
-    "workbench.startupEditor": "none",
-    "autoDarkMode.darkTheme": "Default Dark Modern",
-    "autoDarkMode.lightTheme": "Noctis Lux",
-    "autoDarkMode.autoMode": true,
-    "terminal.integrated.enableMultiLinePasteWarning": "never",
-    "editor.minimap.enabled": false,
     "[html]": {
       "editor.defaultFormatter": "vscode.html-language-features"
     },
     "[css]": {
       "editor.defaultFormatter": "vscode.css-language-features"
     },
-    "workbench.colorTheme": "Default Dark Modern",
     "editor.formatOnSave": true,
     "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "workbench.iconTheme": "vscode-icons",
-    "editor.wordWrapColumn": 360,
     "prettier.printWidth": 1024
   }
 }
