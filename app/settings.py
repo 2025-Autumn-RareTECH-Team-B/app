@@ -109,6 +109,9 @@ USE_TZ = True
 
 #本番ではSTATIC_ROOT を指定する
 STATIC_URL = 'static/'
+STATICFILES_DIRS = [
+    BASE_DIR / "static",  # ← APP/static を読み込む
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
