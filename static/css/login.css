@@ -1,0 +1,94 @@
+/* 背景全体 */
+body {
+    background-color: var(--white);
+    font-family: 'ABeeZee', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* コンテナ */
+.login-container {
+    background: var(--white);
+    border-radius: 15px;
+    text-align: center;
+    width: 390px;
+    margin-top: -25%;
+}
+
+.logo {
+    position: relative;
+    display: inline-block;
+}
+
+/* ロゴ部分 */
+.logo img {
+    width: 450px;
+    max-width: 100%;
+    display: block;
+    margin-bottom: -20%;
+}
+
+.subtitle {
+    position: absolute;
+    bottom: -10px;
+    left: 15%;
+    font-size: 20px;
+    color: var(--brown);
+    margin: 5px 0 15px;
+    background: none;
+    border: 1px solid var(--orange);
+    border-radius: 12px;
+}
+
+/* 入力フィールド */
+.input-group {
+    margin-bottom: 15px;
+    text-align: left;
+    width: 85%;
+    margin: 0 auto 15px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 5px; /* 入力欄とラベルの間隔 */
+    font-size: 14px;
+    color: var(--gray);
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid var(--lightgray);
+    border-radius: 8px;
+    font-size: 14px;
+    box-sizing: border-box; /* パディングを含めた幅調整 */
+}
+
+/* ボタン */
+.login-button,
+.signup-button {
+    display: block;
+    width: 85%;
+    padding: 12px;
+    margin: 12px auto 0;
+    border: none;
+    border-radius: 25px;
+    font-size: 18px;
+    text-align: center;
+    text-decoration: none; /* aタグ用 */
+}
+
+.login-button {
+    background-color: var(--orange);
+    color: var(--black);
+    border: none;
+    font-weight: bold;
+}
+
+.signup-button {
+    border: 2px solid var(--orange);
+    color: var(--black);
+    background: var(--white);
+}
