@@ -23,15 +23,28 @@ services:
     container_name: Django
     build:
       context: .
-      dockerfile: Dockerfile
-    command: python3 manage.py runserver 0.0.0.0:8000
+      dockerfile: ./docker/django/Dockerfile
+    command: gunicorn app.wsgi:application --chdir /code/app --bind 0.0.0.0:8000
+    env_file:
+      - .env
     volumes:
-      - .:/code
+      - ./app:/code/app              
+      - ./static:/static     #staticフォルダ（Nginxと共有）
     ports:
       - "8000:8000"
     depends_on:
       db:
-        # dbのヘルスチェックが終わってからappを起動させる
         condition: service_healthy
+  nginx:
+    build:
+      context: ./docker/nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./static:/static   # staticは共有する
+    depends_on:
+      web:
+        condition: service_started
+
 volumes:
   mysql_data:
