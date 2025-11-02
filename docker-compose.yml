@@ -24,7 +24,6 @@ services:
     build:
       context: .
       dockerfile: ./docker/django/Dockerfile
-    command: gunicorn app.wsgi:application --chdir /code/app --bind 0.0.0.0:8000
     env_file:
       - .env
     volumes:
