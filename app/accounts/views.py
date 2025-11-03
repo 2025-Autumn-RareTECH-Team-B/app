@@ -11,10 +11,6 @@ from django.contrib.auth import authenticate, login as auth_login, logout as aut
 # Djangoが使っているUserモデルを取得
 User = get_user_model()
 
-#season_img_for_monthという関数にmonth: int（整数）を文字列で返す
-def season_img_for_month(month: int) -> str:
-    return f"img/season/{month:02}.png"
-
 # -----------------------
 #   ログイン画面
 # -----------------------
@@ -23,7 +19,7 @@ def login(request):
 
     # ---- GET（最初の表示） ----
     if request.method == "GET":
-        return render(request, "login.html")
+        return render(request, "accounts/login.html")
 
     # ---- POST（ログイン送信） ----
     email = request.POST.get("email", "").strip().lower()
@@ -32,7 +28,7 @@ def login(request):
     # ---- 空欄チェック ----
     if not email or not password:
         messages.error(request, "メールアドレスとパスワードを入力してください")
-        return render(request, "login.html", {"email": email})
+        return render(request, "accounts/login.html", {"email": email})
 
     # ---- 認証 ----
     user = authenticate(request, email=email, password=password)
@@ -40,11 +36,11 @@ def login(request):
     # ---- 失敗 ----
     if user is None:
         messages.error(request, "メールアドレスまたはパスワードが正しくありません。")
-        return render(request, "login.html", {"email": email})
+        return render(request, "accounts/login.html", {"email": email})
 
     # ---- 成功（ログイン）----
     auth_login(request, user)
-    return redirect("goals:home", user_id=request.user.id)
+    return redirect("goals:home")
 
 # -----------------------
 #   サインアップ（新規登録）
@@ -52,13 +48,10 @@ def login(request):
 @require_http_methods(["GET", "POST"])
 def signup(request):
 
-    # 今月の画像を表示
-    month_now=timezone.localdate().month
-    season_img = season_img_for_month(month_now)
 
     # ---- GET（最初の表示） ----
     if request.method == "GET":
-       return render(request, "signup.html",{"season_img":season_img})
+       return render(request, "accounts/signup.html")
 
     # ---- POST（送信されたとき） ----
 
@@ -72,7 +65,7 @@ def signup(request):
     password2 = request.POST.get("password2", "")
 
     # 生の誕生日文字列（例: '2024-10-10'）
-    b_raw = request.POST.get("birthday", "")
+    b_raw = request.POST.get("birthday", "").strip()
 
     # メールアドレスの正規表現（pattern）
     # ユーザー名部分：英数字と「_ . + -」を1文字以上
@@ -83,35 +76,36 @@ def signup(request):
     pattern = r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'
 
     # エラーになって再表示した時のために入力内容を保持
-    ctx = {"name": name, "email": email, "birthday": b_raw, "season_img": season_img}
+    ctx = {"name": name, "email": email, "birthday": b_raw}
 
     # ---- 空欄チェック ----
     if not name or not email or not password1 or not password2:
         messages.error(request, "空のフォームがあります")
-        return render(request, "signup.html", ctx)
+        return render(request, "accounts/signup.html", ctx)
 
     # ---- パスワード一致チェック ----
     if password1 != password2:
         messages.error(request, "パスワードは一致しません")
-        return render(request, "signup.html", ctx)
+        return render(request, "accounts/signup.html", ctx)
 
     # ---- メールアドレス形式チェック ----
     if not re.match(pattern, email):
         messages.error(request, "メールアドレスの形式になっていません")
-        return render(request, "signup.html", ctx)
+        return render(request, "accounts/signup.html", ctx)
 
     # ---- メールアドレス重複チェック ----
     if User.objects.filter(email=email).exists():
         messages.error(request, "このメールアドレスは登録済みです")
-        return render(request, "signup.html", ctx)
+        return render(request, "accounts/signup.html", ctx)
 
     # ---- 誕生日のパース処理 ----
-    # データベースに保存するときの birthday の初期値を None にする
-    # （未入力の場合はこれをそのまま保存する）
-    birthday = None
-
     # ユーザーが誕生日を選択している場合（=b_raw が "" ではない場合）
     # もしユーザーが誕生日を入力していた場合だけ処理する
+
+    if not b_raw:
+        messages.error(request, "空のフォームがあります。")
+        return render(request, "accounts/signup.html", ctx)
+
     if b_raw:
         try:
             # 文字列 → date型に変換
@@ -127,19 +121,15 @@ def signup(request):
             # ---- 範囲チェック ----
             if birthday > max_date:
                 messages.error(request, "未来の日付は選択できません。")
-                return render(request, "signup.html", ctx)
+                return render(request, "accounts/signup.html", ctx)
 
             if birthday < min_date:
                 messages.error(request, "誕生日が古すぎます（120歳以上は登録できません）。")
-                return render(request, "signup.html", ctx)
+                return render(request, "accounts/signup.html", ctx)
 
         except ValueError:
             messages.error(request, "誕生日の形式を正しく選択してください。")
-            return render(request, "signup.html", ctx)
-
-    else:
-        # 未入力の場合は None のままでOK
-        birthday = None
+            return render(request, "accounts/signup.html", ctx)
 
     # --------------------------
     #      ユーザー新規作成
@@ -147,11 +137,8 @@ def signup(request):
     new_user = User(
         username=name,
         email=email,
+        birthday=birthday,
     )
-
-    # Userモデルに birthday フィールドがある場合のみセットする
-    if hasattr(new_user, "birthday"):
-        new_user.birthday = birthday
 
     # パスワードをハッシュ化して保存する
     new_user.set_password(password1)
@@ -174,5 +161,6 @@ def logout(request):
 	return redirect('login')
   
 
-def profile_edit(request):
-    return render(request, 'profile_edit.html')
+def profile_edit(request, username):
+    return render(request, 'profile_edit.html', {"username": username})
+
