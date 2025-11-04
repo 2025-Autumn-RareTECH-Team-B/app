@@ -15,6 +15,7 @@ RUN pip install --upgrade pip \
 #ソースコードをコンテナにコピー
 COPY ./app /code/app
 COPY ./manage.py /code/manage.py
+COPY ./templates /code/templates
 #静的ファイルをまとめる
 RUN python manage.py collectstatic --noinput || true
 #Gunicorn起動コマンド
