@@ -28,7 +28,7 @@ services:
       - .env
     volumes:
       - ./app:/code/app              
-      - ./static:/static     #staticフォルダ（Nginxと共有）
+      - ./static:/code/static     #staticフォルダ（Nginxと共有）
     ports:
       - "8000:8000"
     depends_on:

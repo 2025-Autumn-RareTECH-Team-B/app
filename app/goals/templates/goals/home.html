@@ -1,0 +1,18 @@
+{% extends "base/base-loggedin.html" %}
+{% block title %}
+    Habi | Home
+{% endblock %}
+
+{% block main_content %}
+  <!-- ＋ボタン -->
+  <a href="{% url 'goals:create' %}">
+    ＋
+  </a>
+  <h1>目標一覧</h1>
+  {% for goal in goals %}
+  <div class="goal-item">
+    <h3>{{ goal.title }}</h3>
+    <p>達成年齢：{{ goal.future_age }}歳（{{ goal.future_month }}まで）</p>
+  </div>
+  {% endfor %}
+{% endblock %}

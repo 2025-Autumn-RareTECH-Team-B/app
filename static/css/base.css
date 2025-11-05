@@ -1,0 +1,30 @@
+
+.full-height {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+@supports (min-height: 100dvh) {
+.full-height {
+    min-height: 100dvh;
+}
+}
+
+@media (orientation: landscape) {
+.full-height {
+    padding: 40px 0;
+}
+}
+
+
+/* ===== 全体 ===== */
+body {
+    background-color: var(--white);
+    font-family: 'ABeeZee', sans-serif;
+    margin: 0;
+    padding: 0;
+}
