@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import get_user_model
 from django.contrib import messages
 from django.utils import timezone
+from datetime import datetime
 from .models import GoalsModel
 
 User = get_user_model()
@@ -70,7 +71,7 @@ def goals_create(request):
                 messages.error(request, "日付の形式が正しくありません。")
                 return render(request, "goals/goal_create.html", ctx)
         # ---- 過去は設定できない ----
-        today = timezone.localcate()
+        today = timezone.localtime().date()
         if limit_age < today:
             messages.error(request, "過去の日付は選択できません。")
             return render(request, "goals/goal_create.html", ctx)
