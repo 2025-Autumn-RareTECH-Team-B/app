@@ -1,0 +1,153 @@
+/* ===== 全体 ===== */
+body {
+    background-color: var(--white);
+    font-family: 'ABeeZee', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    overflow: hidden; 
+}
+
+/* コンテナ */
+.login-container {
+    background: var(--white);
+    border-radius: 15px;
+    text-align: center;
+    width: 390px;
+    /* transform: translateY(-5%); */
+}
+
+/* ロゴ部分 */
+.logo-area {
+  background: no-repeat center top;
+  background-size: contain; /* または cover */
+  height: 500px; /* 見た目に合わせて調整 */
+  position: relative;
+  margin-bottom: 10px;
+}
+
+.subtitle {
+    position: relative;
+    bottom: 24px;
+    top: 450px;
+    left: 50%;
+    width: 85%;
+    font-size: 20px;
+    transform: translate(-50%, -50%);
+    color: var(--brown);
+    margin: 5px 0 15px;
+    background: none;
+    border: 1px solid var(--orange);
+    border-radius: 12px;
+}
+
+/* ===== ラベル ===== */
+label {
+    display: block;
+    font-size: 14px;
+    margin: 15px auto 5px;
+    color: var(--gray);
+    text-align: left;
+    width: 85%;
+}
+
+/* 入力フィールド */
+.login-form {
+    position: relative;
+}
+
+
+.input-group {
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--lightgray);
+    border-radius: 8px;
+    padding: 10px 12px;
+    margin: 0 auto 18px;
+    width: 85%;
+    background-color: var(--white);
+}
+
+.input-group i {
+    color: var(--orange);
+    margin-right: 10px;
+    font-size: 18px;
+}
+
+
+.input-group input {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: 14px;
+    background: transparent;
+    box-sizing: border-box;
+}
+
+
+/* ボタン */
+.login-button,
+.signup-button {
+    display: block;
+    width: 85%;
+    padding: 12px;
+    margin: 12px auto 0;
+    border-radius: 25px;
+    font-size: 18px;
+    text-align: center;
+    text-decoration: none;
+    transition: 0.3s ease;
+    cursor: pointer;
+}
+
+.login-button {
+    background-color: var(--orange);
+    color: var(--black);
+    border: none;
+    font-weight: normal;
+}
+
+.signup-button {
+    border: 2px solid var(--orange);
+    color: var(--black);
+    background: var(--white);
+}
+
+.login-container {
+  transform-origin: center top; /* ← 縮小時の基準点 */
+}
+
+@media (max-height: 800px) {
+.login-container {
+    transform: scale(0.9) translateY(-5%);
+}
+}
+
+@media (max-height: 700px) {
+.login-container {
+    transform: scale(0.8) translateY(-4%);
+}
+}
+
+@media (max-height: 600px) {
+.login-container {
+    transform: scale(0.7) translateY(-5%);
+}
+}
+
+@media (max-height: 500px) {
+.login-container {
+    transform: scale(0.8) translateY(-8%);
+}
+}
+
+@media (orientation: landscape) {
+.login-container {
+    transform: scale(0.73) translateY(-9%);
+}
+}
+
+

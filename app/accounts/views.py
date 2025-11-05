@@ -16,7 +16,6 @@ User = get_user_model()
 # -----------------------
 @require_http_methods(["GET", "POST"])
 def login(request):
-
     # ---- GET（最初の表示） ----
     if request.method == "GET":
         return render(request, "accounts/login.html")

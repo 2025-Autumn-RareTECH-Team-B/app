@@ -1,0 +1,28 @@
+{% extends "base/base.html" %}
+{% load static %}
+
+{% block title %}
+    Habi
+{% endblock %}
+
+{% block content %}
+<div class="login-container">
+    <!--- フォーム --->
+    <form method="post" action="{% url 'goals:create' %}">
+        {% csrf_token %}
+
+        <div class="input-group">
+            <label for="title">長期目標内容</label>
+            <input type="text" id="title" name="title" required>
+        </div>
+
+        <div class="input-group">
+            <label for="limit_age">何歳までに達成したい？</label>
+            <input id="limit_age" type="date" name="limit_age" min="{{ today|date:'Y-m-d' }}" required>
+        </div>
+        
+        <button type="submit">登録</button>
+        <a href="{% url 'goals:home' %}">キャンセル</a>
+    </form>
+</div>
+{% endblock %}
