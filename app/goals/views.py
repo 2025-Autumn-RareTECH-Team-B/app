@@ -4,8 +4,11 @@ from django.contrib import messages
 from django.utils import timezone
 from datetime import datetime
 from .models import GoalsModel
+from datetime import date
+import random
 
 User = get_user_model()
+
 
 def goals_index(request, user_id=None):
     if not request.user.is_authenticated:
@@ -16,7 +19,15 @@ def goals_index(request, user_id=None):
     target_user = request.user if user_id is None else get_object_or_404(User, pk=user_id)
 
     # ここで target_user のゴールを取得してテンプレへ
-    ctx = {"profile_user": target_user}
+    ctx = {
+        "profile_user": target_user,
+        "message": random.choice([
+        "お疲れさまです🌙",
+        "コツコツ進めましょう🐰",
+        "頑張っててえらいよ✨",
+        "できることから、ひとつずつ。",
+        ])
+        }
      # 今の状態ではただ年齢の昇順に全部のgoalsを受け取ってるだけ
     goals = GoalsModel.objects.filter(user=request.user).order_by("limit_age")
     birthday = request.user.birthday
@@ -39,7 +50,7 @@ def goals_index(request, user_id=None):
             "future_month": future_month,
             "is_done": goal.is_done,
         })
-    return render(request, "goals/home.html", {"goals": goals_with_age})
+    return render(request, "goals/home.html", {"goals": goals_with_age,"message": ctx["message"]})
 
 
 def goals_create(request):
@@ -77,11 +88,83 @@ def goals_create(request):
             return render(request, "goals/goal_create.html", ctx)
 
         # バリデーションOKなら保存
-    goal = GoalsModel.objects.create(
-        user=request.user,
-        title=title,
-        limit_age=limit_age,
+        goal = GoalsModel.objects.create(
+            user=request.user,
+            title=title,
+            limit_age=limit_age,
+        )
+        messages.success(request, "目標を登録しました！")
+        return redirect("goals:home")
+    
+    
+def goal_edit(request, goal_id):
+    goal = get_object_or_404(GoalsModel, id=goal_id, user=request.user)
+    today = timezone.localdate()
+
+    # ---- GET（最初の表示） ----
+    if request.method == "GET":
+       
+        # CBに保存されているものを表示
+        ctx = {"goal": goal, "title": goal.title, "limit_date": goal.limit_age.isoformat(),}
+        return render(request, "goals/goal_edit.html", ctx)
+		
+	# ---- POST（送信されたとき） ----
+    # strip() = 前後の空白スペース・改行を消す
+    title = request.POST.get("title", "").strip()
+    limit_date_str = request.POST.get("limit_date", "").strip()
+    
+    ctx = {"goal": goal, "title": title, "limit_date": limit_date_str}
+    
+    # ---- 空欄チェック ----
+    if not title or not limit_date_str:
+        messages.error(request, "タイトルと期限を入力してください")
+        return render(request, "goals/goal_edit.html", ctx)
+
+    # ---- 日付形式チェック ----
+    try:
+        limit_date = date.fromisoformat(limit_date_str)
+    except ValueError:
+        messages.error(request, "期限の日付形式が正しくありません。")
+        return render(request, "goals/goal_edit.html", ctx)
+
+    #（今日より過去の日付はだめ）
+    if limit_date < today:
+        messages.error(request, "今日以降の日付を選んでください")
+        return render(request, "goals/goal_edit.html", ctx)
+
+    # userの誕生日から期限日を設定
+    birthday = request.user.birthday
+    age_at_limit = (
+    limit_date.year - birthday.year
+    - ((limit_date.month, limit_date.day) < (birthday.month, birthday.day))
     )
-    messages.success(request, "目標を登録しました！")
-    return redirect("goals:home")
+
+
+    # 18歳以上80歳未満
+    if not (18 <= age_at_limit <= 80):
+        messages.error(request, "期限日に18〜80歳の範囲になるよう設定してください。")
+        return render(request, "goals/goal_edit.html", ctx)
+
+    # ---- 保存 ----
+    goal.title = title
+    goal.limit_age = limit_date
+    goal.save()
+
+
+    messages.success(request, "長期目標を更新しました")
+    return redirect("goals:home")    
+				
+				
+def goal_delete(request, goal_id):
+    # goal取得
+    goal = get_object_or_404(GoalsModel, id=goal_id, user=request.user)
+
+		#---- POST（送信されたとき） ----
+    if request.method == "POST":
+        goal.delete()
+        messages.success(request, "長期目標を削除しました。")
+        return redirect("goals:home")
+
+    # ---- GET ----
+    return render(request, "goals/goal_delete.html", {"goal": goal})
     

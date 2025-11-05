@@ -269,6 +269,6 @@ def profile_edit(request, username):
 
     # 登録完了 → ログイン画面へリダイレクト
     messages.success(request, "プロフィールを更新しました。")
-    return redirect("profile_edit", username=user.username)
+    return redirect('goals:home', username=request.user.username)
     
 
