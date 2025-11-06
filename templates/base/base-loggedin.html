@@ -12,10 +12,7 @@
         <!-- ログイン後の共通レイアウトCSS（これが抜けてた） -->
     <link rel="stylesheet" href="{% static 'css/base-loggedin.css' %}">
 
-<!-- ページ固有のCSS -->
-{% block extra_css %}{% endblock %}
-        crossorigin="anonymous"
-    >
+
     <!-- ページ固有のCSS -->
     <link rel="stylesheet" href="{% static 'css/modal.css' %}">
     {% block extra_css %}{% endblock %}
