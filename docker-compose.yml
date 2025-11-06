@@ -28,8 +28,8 @@ services:
       - .env
     volumes:
       - ./app:/code/app              
-      - ./static:/code/static     #staticフォルダ（Nginxと共有）
-      - ./staticfiles:/code/staticfiles  # collectstatic後のファイルを共有
+      #- ./static:/code/static     #staticフォルダ（Nginxと共有）
+      #- ./staticfiles:/code/staticfiles  # collectstatic後のファイルを共有
     depends_on:
       db:
         condition: service_healthy
