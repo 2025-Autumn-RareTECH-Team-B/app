@@ -109,7 +109,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 #本番ではSTATIC_ROOT を指定する
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     BASE_DIR / "static",  # ← APP/static を読み込む
 ]

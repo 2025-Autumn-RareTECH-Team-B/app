@@ -30,8 +30,6 @@ services:
       - ./app:/code/app              
       - ./static:/code/static     #staticフォルダ（Nginxと共有）
       - ./staticfiles:/code/staticfiles  # collectstatic後のファイルを共有
-    ports:
-      - "8000:8000"
     depends_on:
       db:
         condition: service_healthy
@@ -39,9 +37,9 @@ services:
     build:
       context: ./docker/nginx
     ports:
-      - "80:80"
+      - "8000:80"
     volumes:
-      - ./static:/static   # staticは共有する
+      - ./static:/code/static   # staticは共有する
       - ./staticfiles:/code/staticfiles
     depends_on:
       web:
