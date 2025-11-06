@@ -50,6 +50,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'app.context_processors.season_image',
+                'app.context_processors.random_message',
             ],
         },
     },
