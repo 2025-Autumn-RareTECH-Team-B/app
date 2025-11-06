@@ -34,18 +34,6 @@
 
         </button>
     </div>
-<header>
-    <!-- 季節画像（views.py から渡された current_month 使用） -->
-    <img src="{% static season_image %}" alt="季節画像">
-    <!-- ユーザー名受け渡し、メッセージ表示 -->
-    <p><span>{{ user.user_name|default:user.username }}</span> さん！</p>
-    <p>{{ message }}</p>
-    <!-- ログアウトボタン（右上固定） -->
-    <button type="button" data-bs-toggle="modal" data-bs-target="#logoutModal" class="btn p-0 border-0 bg-transparent">
-        <img src="{% static 'img/logout.png' %}" 
-            alt="Logout" 
-        >
-    </button>
 </header>
 
 
