@@ -19,8 +19,10 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('goals/', include('app.goals.urls')),
+    # ↓ namespace 付きで include（goals/urls.py に app_name="goals" があるのでOK）
+    path('goals/', include(('app.goals.urls', 'goals'), namespace='goals')),
+    # ↓ これも namespace を付ける（steps/urls.py に app_name="steps" 必須）
+    path('steps/', include(('app.steps.urls', 'steps'), namespace='steps')),
     path('', include('app.accounts.urls')),
-    #path('steps/', include('app.steps.urls')),
 ]
 

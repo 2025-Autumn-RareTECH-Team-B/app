@@ -4,12 +4,15 @@ from django.contrib import messages
 from django.utils import timezone
 from datetime import datetime
 from .models import GoalsModel
+from app.steps.models import StepsModel
 from datetime import date
 import random
+from django.views.decorators.http import require_http_methods
+from django.contrib.auth.decorators import login_required
 
 User = get_user_model()
 
-
+@login_required
 def goals_index(request, user_id=None):
     if not request.user.is_authenticated:
         return redirect("login")  # or settings.LOGIN_URL
@@ -52,7 +55,8 @@ def goals_index(request, user_id=None):
         })
     return render(request, "goals/home.html", {"goals": goals_with_age,"message": ctx["message"]})
 
-
+@login_required
+@require_http_methods(["GET", "POST"])
 def goals_create(request):
     # ---- GET(最初の表示) ----
     if request.method == "GET":
@@ -95,8 +99,9 @@ def goals_create(request):
         )
         messages.success(request, "目標を登録しました！")
         return redirect("goals:home")
-    
-    
+
+@login_required
+@require_http_methods(["GET", "POST"])   
 def goal_edit(request, goal_id):
     goal = get_object_or_404(GoalsModel, id=goal_id, user=request.user)
     today = timezone.localdate()
@@ -139,12 +144,6 @@ def goal_edit(request, goal_id):
     - ((limit_date.month, limit_date.day) < (birthday.month, birthday.day))
     )
 
-
-    # 18歳以上80歳未満
-    if not (18 <= age_at_limit <= 80):
-        messages.error(request, "期限日に18〜80歳の範囲になるよう設定してください。")
-        return render(request, "goals/goal_edit.html", ctx)
-
     # ---- 保存 ----
     goal.title = title
     goal.limit_age = limit_date
@@ -153,18 +152,20 @@ def goal_edit(request, goal_id):
 
     messages.success(request, "長期目標を更新しました")
     return redirect("goals:home")    
-				
-				
+
+@login_required
+@require_http_methods(["POST"])				
 def goal_delete(request, goal_id):
-    # goal取得
     goal = get_object_or_404(GoalsModel, id=goal_id, user=request.user)
-
-		#---- POST（送信されたとき） ----
-    if request.method == "POST":
-        goal.delete()
-        messages.success(request, "長期目標を削除しました。")
-        return redirect("goals:home")
-
-    # ---- GET ----
-    return render(request, "goals/goal_delete.html", {"goal": goal})
+    goal.delete()
+    messages.success(request, "長期目標を削除しました。")
+    return redirect("goals:home")
     
+@login_required
+@require_http_methods(["POST"])	
+def goal_detail(request, goal_id):
+    goal = get_object_or_404(GoalsModel, id=goal_id, user=request.user)
+    steps = StepsModel.objects.filter(goals=goal).order_by("id")  # ← goals（複数）に
+    return render(request, "goals/goal_detail.html", {"goal": goal, "steps": steps})
+
+
