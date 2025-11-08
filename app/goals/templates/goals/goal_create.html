@@ -1,28 +1,30 @@
-{% extends "base/base.html" %}
-{% load static %}
-
+{% extends "base/base-loggedin.html" %}
 {% block title %}
-    Habi
+長期目標新規作成 | Habi
 {% endblock %}
 
-{% block content %}
-<div class="login-container">
-    <!--- フォーム --->
-    <form method="post" action="{% url 'goals:create' %}">
-        {% csrf_token %}
-
-        <div class="input-group">
-            <label for="title">長期目標内容</label>
-            <input type="text" id="title" name="title" required>
-        </div>
-
-        <div class="input-group">
-            <label for="limit_age">何歳までに達成したい？</label>
-            <input id="limit_age" type="date" name="limit_age" min="{{ today|date:'Y-m-d' }}" required>
-        </div>
-        
-        <button type="submit">登録</button>
-        <a href="{% url 'goals:home' %}">キャンセル</a>
-    </form>
+{% block main_content %}
+<!-- 上部ナビ(ボタン部分) -->
+<div class="profile-header">
+    <a href="{% url 'goals:home' %}" class="cancel-link">キャンセル</a>
+    <h2>長期目標新規作成</h2>
+    <button type="submit" form="goal-create-form" class="submit-link">変更</button>
 </div>
+
+<!-- フォーム -->
+<form id="goal-create-form" method="post" action="{% url 'goals:create' %}" class="profile-form">
+    {% csrf_token %}
+
+    <div class="form-group">
+        <!-- 長期目標タイトル変更フォーム -->
+        <label for="title">タイトル</label> 
+        <input type="text" id="title" name="title" required>
+    </div>
+
+    <div class="form-group">
+        <!-- 期限変更フォーム -->
+        <label for="limit_age">達成期限</label>
+        <input type="date" id="limit_age" name="limit_age" required>
+    </div>
+</form>
 {% endblock %}
