@@ -23,15 +23,27 @@ services:
     container_name: Django
     build:
       context: .
-      dockerfile: Dockerfile
-    command: python3 manage.py runserver 0.0.0.0:8000
+      dockerfile: ./docker/django/Dockerfile
+    env_file:
+      - .env
     volumes:
-      - .:/code
-    ports:
-      - "8000:8000"
+      - ./app:/code/app              
+      #- ./static:/code/static     #staticフォルダ（Nginxと共有）
+      #- ./staticfiles:/code/staticfiles  # collectstatic後のファイルを共有
     depends_on:
       db:
-        # dbのヘルスチェックが終わってからappを起動させる
         condition: service_healthy
+  nginx:
+    build:
+      context: ./docker/nginx
+    ports:
+      - "8000:80"
+    volumes:
+      - ./static:/code/static   # staticは共有する
+      - ./staticfiles:/code/staticfiles
+    depends_on:
+      web:
+        condition: service_started
+
 volumes:
   mysql_data:
