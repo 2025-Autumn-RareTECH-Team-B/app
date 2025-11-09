@@ -62,7 +62,6 @@ body {
     flex: 1;
     overflow-y: auto;
     padding-top: 113px;   /* ← これを追加！ヘッダーの高さぶん */
-    padding-bottom: 78px; /* フッターは既にOK */
 }
 
 
