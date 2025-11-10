@@ -1,10 +1,17 @@
 {% extends "base/base-loggedin.html" %}
+{% load static %}
+
 {% block title %}
 長期目標新規作成 | Habi
 {% endblock %}
 
+{% block extra_css %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'goals/css/goal_create.css' %}">
+{% endblock %}
+
 {% block main_content %}
-<!-- 上部ナビ(ボタン部分) -->
+<div class="page-content">
 <div class="profile-header">
     <a href="{% url 'goals:home' %}" class="cancel-link">キャンセル</a>
     <h2>長期目標新規作成</h2>
@@ -27,4 +34,5 @@
         <input type="date" id="limit_age" name="limit_age" required>
     </div>
 </form>
+</div>
 {% endblock %}
