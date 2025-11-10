@@ -1,0 +1,88 @@
+/* ===== プロフィール編集画面 共通 ===== */
+
+.profile-welcome {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--white);
+    padding: 25px 0 10px;
+}
+
+.profile-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.welcome-text p {
+    margin: 0;
+    text-align: center;
+    font-size: 16px;
+    color: var(--brown);
+    font-weight: 500;
+}
+
+/* ===== タブ風ヘッダー（キャンセル / タイトル / 変更） ===== */
+.profile-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    font-size: 16px;
+    color: var(--brown);
+    box-shadow: 0 -5px 12px rgba(0, 0, 0, 0.06);
+}
+
+.cancel-link {
+    color: var(--orange);
+    font-weight: 600;
+    text-decoration: none;
+}
+.submit-link {
+    color: var(--gray);
+    font-weight: 600;
+    background: none;
+    border: none;
+}
+h2 {
+    color: var(--brown);
+    font-weight: 600;
+    justify-items: center;
+}
+
+/* ===== フォーム ===== */
+.profile-form {
+    padding: 18px 18px 20px 18px;
+    background: transparent;
+    min-height: calc(100vh - 262px);
+}
+
+.form-group {
+    margin-bottom: 18px;
+}
+
+.profile-form input {
+    width: 100%;
+    background: var(--white);
+    border: none;
+    border-radius: 12px;
+    padding: 8px;
+    font-size: 15px;
+    color: var(--black);
+    box-sizing: border-box;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
+}
+
+.profile-form input[type="date"] {
+    padding: 12px;
+}
+
+/* ラベル */
+.profile-form label {
+    display: block;
+    font-size: 14px;
+    color: var(--brown);
+    margin-bottom: 5px;
+    margin-left: 7px;
+}

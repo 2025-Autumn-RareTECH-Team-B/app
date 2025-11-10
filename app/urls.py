@@ -23,4 +23,3 @@ urlpatterns = [
     path('', include('app.accounts.urls')),
     path('steps/', include(('app.steps.urls'))),
 ]
-
