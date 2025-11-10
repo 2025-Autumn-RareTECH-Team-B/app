@@ -150,6 +150,17 @@ def goals_delete(request, goal_id):
 def goals_detail(request, goal_id):
     goal = get_object_or_404(GoalsModel, id=goal_id, user=request.user)
     steps = StepsModel.objects.filter(goals=goal).order_by("id")  # ← goals（複数）に
-    return render(request, "goals/goal_detail.html", {"goal": goal, "steps": steps})
+    # ステップ数と完了数を取得
+    total_steps = steps.count()
+    completed_steps = steps.filter(is_done=True).count()
+
+    # 割合を計算（ゼロ除算対策）
+    progress_percent = int((completed_steps / total_steps) * 100) if total_steps > 0 else 0
+
+    return render(request, "goals/goal_detail.html", {
+        "goal": goal, 
+        "steps": steps,
+        "progress_percent": progress_percent,
+        })
 
 
