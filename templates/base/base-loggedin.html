@@ -1,32 +1,41 @@
 {% extends "base/base.html" %}
 {% load static %}
+
 {% block css %}
     <!-- Bootstrap（CSS） -->
     <link 
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" 
         rel="stylesheet" 
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" 
-        crossorigin="anonymous"
-    >
+        crossorigin="anonymous" >
+
+        <!-- ログイン後の共通レイアウトCSS（これが抜けてた） -->
+    <link rel="stylesheet" href="{% static 'css/base-loggedin.css' %}">
+
+
     <!-- ページ固有のCSS -->
     <link rel="stylesheet" href="{% static 'css/modal.css' %}">
     {% block extra_css %}{% endblock %}
 {% endblock %}
+
 {% block content%}
 <!-- ===== Header ===== -->
-<header>
-    <!-- 季節画像（views.py から渡された current_month 使用） -->
-    <img src="{% static season_image %}" alt="季節画像">
-    <!-- ユーザー名受け渡し、メッセージ表示 -->
-    <p><span>{{ user.user_name|default:user.username }}</span> さん！</p>
-    <p>{{ message }}</p>
-    <!-- ログアウトボタン（右上固定） -->
-    <button type="button" data-bs-toggle="modal" data-bs-target="#logoutModal" class="btn p-0 border-0 bg-transparent">
-        <img src="{% static 'img/logout.png' %}" 
-            alt="Logout" 
-        >
-    </button>
+<header class="profile-header-area">
+    <div class="header-content">
+        <img src="{% static season_image %}" alt="季節画像" class="profile-header-icon">
+
+        <p><span>{{ user.user_name|default:user.username }}</span> さん！</p>
+
+        <p>{{ message }}</p>
+
+        <button type="button" data-bs-toggle="modal" data-bs-target="#logoutModal" class="logout-button">
+
+        <img src="{% static 'img/logout.png' %}"  alt="Logout" >
+
+        </button>
+    </div>
 </header>
+
 
 <!-- ===== Main Content ===== -->
 

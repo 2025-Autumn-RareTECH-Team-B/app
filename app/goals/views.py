@@ -152,3 +152,4 @@ def goals_detail(request, goal_id):
     steps = StepsModel.objects.filter(goals=goal).order_by("id")  # ← goals（複数）に
     return render(request, "goals/goal_detail.html", {"goal": goal, "steps": steps})
 
+
