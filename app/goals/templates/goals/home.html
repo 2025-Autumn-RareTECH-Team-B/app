@@ -10,22 +10,13 @@
   </a>
   <h1>目標一覧</h1>
   {% for future_age, data in goals_by_age.items %}
-    <h3>{{ future_age }}歳のゴール （合計: {{ data.total }}件）</h3>
+    <h3>{{ future_age }}歳のゴール（合計: {{ data.total }}件）</h3>
     <div class="goal-item">
       {% for goal in data.goals %}
-        <!-- ここにリンクを入れる必要があるが後ほど -->
-        <!-- <a href="{% url 'goals:goal_detail' goal.id %}" style="color:orange;">
+        <p>{{ goal.future_month }}に達成予定</p>
+        <a href="{% url 'goals:goal_detail' goal.id %}" style="color:orange;">
         <h3>{{ goal.title }}</h3>
-        </a> -->
-        <a href="{% url 'goals:goal_edit' goal.id %}" style="color:blue;">
-        <h3>{{ goal.title }}を編集する</h3>
         </a>
-        <form method="post" action="{% url 'goals:goal_delete' goal.id %}">
-          {% csrf_token %}
-          <button type="submit" style="color:red;">
-            {{ goal.title }}を削除する
-          </button>
-        </form>
       {% endfor %}
     </div>
   {% endfor %}

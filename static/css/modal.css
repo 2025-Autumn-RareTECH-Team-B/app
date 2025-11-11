@@ -25,3 +25,12 @@
   color: var(--brown);
   border-color: var(--brown);
 }
+
+.btn.btn-edit {
+  color: var(--brown);
+  background-color: var(--lightbrown);
+}
+
+.initial-modal-container {
+    width: 70%;
+}

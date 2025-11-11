@@ -48,3 +48,11 @@ def step_delete(request, step_id):
     messages.success(request, "スモールステップを削除しました。")
     return redirect("goals:goal_detail", goal_id=goal_id)
 
+@login_required
+@require_http_methods(["POST"])
+def complete_step(request, step_id):
+    step = get_object_or_404(StepsModel, id=step_id, goals__user=request.user)
+    step.is_done = not step.is_done
+    step.save()
+    return redirect("goals:goal_detail", goal_id=step.goals.id)
+
