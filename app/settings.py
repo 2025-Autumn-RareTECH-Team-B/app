@@ -129,6 +129,6 @@ CSRF_TRUSTED_ORIGINS = [
 
     'http://127.0.0.1:8000',
 ]
-
+#本番はCSRF_TRUSTED_ORIGINSにドメイン名とALBに変更
 LOGIN_URL = "/login/"
 
