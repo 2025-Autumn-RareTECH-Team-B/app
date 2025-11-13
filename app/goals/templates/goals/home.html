@@ -1,23 +1,64 @@
 {% extends "base/base-loggedin.html" %}
+{% load static %}
 {% block title %}
     Habi | Home
 {% endblock %}
 
 {% block main_content %}
-  <!-- ＋ボタン -->
-  <a href="{% url 'goals:create' %}">
-    ＋
-  </a>
-  <h1>目標一覧</h1>
-  {% for future_age, data in goals_by_age.items %}
-    <h3>{{ future_age }}歳のゴール（合計: {{ data.total }}件）</h3>
-    <div class="goal-item">
-      {% for goal in data.goals %}
-        <p>{{ goal.future_month }}に達成予定</p>
-        <a href="{% url 'goals:goal_detail' goal.id %}" style="color:orange;">
-        <h3>{{ goal.title }}</h3>
-        </a>
-      {% endfor %}
+<div style="margin-top: 115px; height: 100px;">
+  <div class="d-flex align-items-center" style="height: 100%;">
+    <!-- ＋ボタン -->
+    <div class="flex-shrink-0" style="margin-bottom: 20px;">
+      <a href="{% url 'goals:create' %}">
+        <img src="{% static 'goals/img/add-circle-yellow.png' %}" 
+                alt="作成" 
+            >
+      </a>
     </div>
-  {% endfor %}
+    <!-- 横スクロール可能なタブ見出し部分 -->
+    <div class="flex-grow-1" style="overflow-x: auto; overflow-y: hidden; height: 100px;">
+      <ul class="nav nav-tabs flex-nowrap" 
+        style="white-space: nowrap; border-bottom: none; margin: 0; padding: 0; height: 82px;">
+        {% for future_age, data in goals_by_age.items %}
+        <li class="nav-item" style="flex: 0 0 auto; height: 82px;">
+          <a class="nav-link d-flex align-items-center justify-content-center {% if future_age == active_age %}active{% endif %}" 
+            id="tab-{{ future_age }}" 
+            data-bs-toggle="tab" 
+            href="#age{{ future_age }}" 
+            role="tab"
+            style="width: 82px; height: 82px; border-radius: 10px; background-color: transparent; color: #6c757d; font-weight: normal; padding: 0; box-sizing: border-box; border: none;">
+            {{ future_age }}
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+  <!-- 各年齢の内容部分 -->
+  <div class="tab-content mt-3">
+    {% for future_age, data in goals_by_age.items %}
+    <div class="tab-pane fade {% if future_age == active_age %}show active{% endif %}" id="age{{ future_age }}" role="tabpanel">
+      <h3> 達成率：（達成済の数: {{ data.done_count }}）/（合計: {{ data.total }}件）</h3>
+      <div class="goal-item">
+        {% for goal in data.goals %}
+          <form method="POST" action="{% url 'goals:complete_goal' goal.id %}">
+            {% csrf_token %}
+            <button type="submit" class="btn p-0 border-0 bg-transparent">
+              {% if goal.is_done %}
+                <img src="{% static 'img/check-circle.png' %}" alt="完了">
+              {% else %}
+                <img src="{% static 'img/empty-circle.png' %}" alt="未完了">
+              {% endif %}
+            </button>
+          </form>
+          <p>{{ goal.future_month }}</p>
+          <a href="{% url 'goals:goal_detail' goal.id %}" style="color:orange;">
+          <h3>{{ goal.title }}</h3>
+          </a>
+        {% endfor %}
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
 {% endblock %}
