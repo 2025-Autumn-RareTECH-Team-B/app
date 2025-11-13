@@ -73,6 +73,11 @@
     </button>
   </div>
   {% include "modal/steps-deletemodal.html" with step=step %}
+{% empty %}
+  <div class="text-center text-muted my-4">
+    <p>スモールステップが登録されていません。</p>
+    <p>早速登録してみましょう！</p>
+  </div>
 {% endfor %}
 {% include "modal/edit-or-deletemodal.html" with goal=goal %}
 {% endblock %}
