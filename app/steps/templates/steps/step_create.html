@@ -14,7 +14,7 @@
 <div class="page-content">
 <!-- 上部ナビ(ボタン部分) -->
 <div class="profile-header">
-    <a href="{% url 'goals:home' %}" class="cancel-link">キャンセル</a>
+    <a href="{% url 'goals:goal_detail' goal.id %}" class="cancel-link">キャンセル</a>
     <h2>スモールステップ新規作成</h2>
     <button type="submit" form="step-create-form" class="submit-link">追加</button>
 </div>
