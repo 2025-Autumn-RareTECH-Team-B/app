@@ -11,15 +11,6 @@
 <div class="signup-container">
     <div class="signup-card">
         <h2 class="signup-title">新規登録</h2>
-
-            {% if messages %}
-            <div class="message-area">
-            {% for message in messages %}
-                <div class="message {{ message.tags }}">{{ message }}</div>
-            {% endfor %}
-            </div>
-            {% endif %}
-
             <form method="POST" class="signup-form">
             {% csrf_token %}
 
