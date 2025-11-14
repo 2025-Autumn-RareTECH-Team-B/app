@@ -84,6 +84,10 @@ body {
     flex-shrink: 0;
 }
 
+.goals_select p:first-child {
+    margin-bottom: 0;
+}
+
 /* 中央のタイトル部分（長文対応） */
 .goals_select p:nth-child(2) {
     margin: 0 7px; /* 左右に余白 */
