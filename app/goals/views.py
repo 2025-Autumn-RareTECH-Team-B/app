@@ -8,6 +8,7 @@ from app.steps.models import StepsModel
 from collections import defaultdict
 from django.views.decorators.http import require_http_methods
 from django.contrib.auth.decorators import login_required
+from django.urls import reverse
 
 
 User = get_user_model()
@@ -22,7 +23,7 @@ def goals_index(request, user_id=None):
     # ここで target_user のゴールを取得してテンプレへ
     goals = GoalsModel.objects.filter(user=target_user).order_by("limit_age")
     # future_age ごとにグループ化し、件数も同時に集計
-    goals_by_age = defaultdict(lambda: {"goals": [], "total": 0})
+    goals_by_age = defaultdict(lambda: {"goals": [], "total": 0, "done_count": 0})
     ctx = {"profile_user": target_user}
     for goal in goals:
         limit_age = goal.limit_age
@@ -37,7 +38,20 @@ def goals_index(request, user_id=None):
             "future_month": future_month,
             "is_done": goal.is_done,
         })
+        # 同年齢の全目標数をカウント
         goals_by_age[future_age]["total"] += 1
+        # その中で達成済の数をカウント
+        if goal.is_done:
+            goals_by_age[future_age]["done_count"] += 1
+
+    sorted_ages = sorted(goals_by_age.keys())  # 年齢順
+    active_age = request.GET.get("active_age")
+    if active_age is None:
+        # 初期表示は最も若い age
+        active_age = sorted_ages[0] if sorted_ages else None
+    else:
+        # GET パラメータがあれば文字列なので int に変換
+        active_age = int(active_age)
 
     # 年齢順に並び替え
     sorted_goals_by_age = dict(sorted(goals_by_age.items()))
@@ -45,6 +59,7 @@ def goals_index(request, user_id=None):
     return render(request, "goals/home.html", {
         "profile_user": target_user,
         "goals_by_age": sorted_goals_by_age,
+        "active_age": active_age,
     })
 
 @login_required
@@ -81,6 +96,25 @@ def goals_create(request):
         today = timezone.localtime().date()
         if limit_age < today:
             messages.error(request, "過去の日付は選択できません。")
+            return render(request, "goals/goal_create.html", ctx)
+        
+        # ---- 同じ年齢の目標は5個まで制限 ----
+        birthday = request.user.birthday
+        future_age = limit_age.year - birthday.year - (
+            (limit_age.month, limit_age.day) < (birthday.month, birthday.day)
+        )
+
+        # 同じ future_age のゴールを数える
+        count_same_age = 0
+        for goal in GoalsModel.objects.filter(user=request.user):
+            age = goal.limit_age.year - birthday.year - (
+                (goal.limit_age.month, goal.limit_age.day) < (birthday.month, birthday.day)
+            )
+            if age == future_age:
+                count_same_age += 1
+
+        if count_same_age >= 5:
+            messages.error(request, f"同じ年齢の目標は5件までしか登録できません。")
             return render(request, "goals/goal_create.html", ctx)
 
         # バリデーションOKなら保存
@@ -163,4 +197,17 @@ def goals_detail(request, goal_id):
         "progress_percent": progress_percent,
         })
 
+@login_required
+@require_http_methods(["POST"])
+def complete_goal(request, goal_id):
+    goal = get_object_or_404(GoalsModel, id=goal_id, user=request.user)
+    goal.is_done = not goal.is_done
+    goal.save()
+    # 完了ボタン押した goal の future_age を取得
+    birthday = request.user.birthday
+    future_age = goal.limit_age.year - birthday.year - ((goal.limit_age.month, goal.limit_age.day) < (birthday.month, birthday.day))
+    
+    # redirect に GET パラメータを付与
+    url = reverse("goals:home") + f"?active_age={future_age}"
+    return redirect(url)
 

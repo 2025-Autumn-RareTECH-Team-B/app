@@ -13,7 +13,7 @@
 {% block main_content %}
 <div class="page-content">
     <div class="profile-header">
-        <a href="{% url 'goals:home' %}" class="cancel-link">キャンセル</a>
+        <a href="{% url 'goals:goal_detail' goal.id %}" class="cancel-link">キャンセル</a>
         <h2>長期目標編集</h2>
         <button type="submit" form="goal-edit-form" class="submit-link">変更</button>
     </div>
