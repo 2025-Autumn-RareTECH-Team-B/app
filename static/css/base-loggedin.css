@@ -48,6 +48,15 @@
     margin: 0 10px;
 }
 
+.message-container {
+    margin-top: 5px;
+    margin-left: 20px;
+    width: max-content;
+}
+
+p {
+    margin-bottom: 0;
+}
 
 /* 画面全体を上下で分割する */
 body {
