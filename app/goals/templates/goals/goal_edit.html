@@ -33,6 +33,15 @@
             <label for="limit_age">達成期限</label>
             <input type="date" id="limit_age" name="limit_age" value="{{ goal.limit_age|date:'Y-m-d' }}" required>
         </div>
+        <p id="age-display">ー歳</p>
+        <p id="deadline-error" style="color: red; font-weight: bold;"></p>
     </form>
 </div>
+{% block extra_js %}
+{{ block.super }}
+<script>
+    const USER_BIRTHDAY = "{{ user.birthday }}";
+</script>
+<script src="{% static 'goals/js/age_calc.js' %}"></script>
+{% endblock %}
 {% endblock %}

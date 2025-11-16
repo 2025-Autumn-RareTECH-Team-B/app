@@ -12,27 +12,36 @@
 
 {% block main_content %}
 <div class="page-content">
-<div class="profile-header">
-    <a href="{% url 'goals:home' %}" class="cancel-link">キャンセル</a>
-    <h2>長期目標新規作成</h2>
-    <button type="submit" form="goal-create-form" class="submit-link">追加</button>
-</div>
-
-<!-- フォーム -->
-<form id="goal-create-form" method="post" action="{% url 'goals:create' %}" class="profile-form">
-    {% csrf_token %}
-
-    <div class="form-group">
-        <!-- 長期目標タイトル変更フォーム -->
-        <label for="title">タイトル</label> 
-        <input type="text" id="title" name="title" required>
+    <div class="profile-header">
+        <a href="{% url 'goals:home' %}" class="cancel-link">キャンセル</a>
+        <h2>長期目標新規作成</h2>
+        <button type="submit" form="goal-create-form" class="submit-link">追加</button>
     </div>
 
-    <div class="form-group">
-        <!-- 期限変更フォーム -->
-        <label for="limit_age">達成期限</label>
-        <input type="date" id="limit_age" name="limit_age" required>
-    </div>
-</form>
+    <!-- フォーム -->
+    <form id="goal-create-form" method="post" action="{% url 'goals:create' %}" class="profile-form">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <!-- 長期目標タイトル変更フォーム -->
+            <label for="title">タイトル</label> 
+            <input type="text" id="title" name="title" required>
+        </div>
+
+        <div class="form-group">
+            <!-- 期限変更フォーム -->
+            <label for="limit_age">達成期限</label>
+            <input type="date" id="limit_age" name="limit_age" required>
+        </div>
+        <p id="age-display">ー歳</p>
+        <p id="deadline-error" style="color: red; font-weight: bold;"></p>
+    </form>
 </div>
+{% block extra_js %}
+{{ block.super }}
+<script>
+    const USER_BIRTHDAY = "{{ user.birthday }}";
+</script>
+<script src="{% static 'goals/js/age_calc.js' %}"></script>
+{% endblock %}
 {% endblock %}
