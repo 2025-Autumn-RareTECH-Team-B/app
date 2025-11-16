@@ -4,6 +4,11 @@
     Habi | Home
 {% endblock %}
 
+{% block extra_css %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'goals/css/home.css' %}">
+{% endblock %}
+
 {% block main_content %}
 <div style="margin-top: 115px; height: 100px;">
   <div class="d-flex align-items-center" style="height: 100%;">
@@ -21,12 +26,12 @@
         style="white-space: nowrap; border-bottom: none; margin: 0; padding: 0; height: 82px;">
         {% for future_age, data in goals_by_age.items %}
         <li class="nav-item" style="flex: 0 0 auto; height: 82px;">
-          <a class="nav-link d-flex align-items-center justify-content-center {% if future_age == active_age %}active{% endif %}" 
+          <a class="nav-link moon-tab d-flex align-items-center justify-content-center {% if future_age == active_age %}active{% endif %}" 
             id="tab-{{ future_age }}" 
             data-bs-toggle="tab" 
             href="#age{{ future_age }}" 
             role="tab"
-            style="width: 82px; height: 82px; border-radius: 10px; background-color: transparent; color: #6c757d; font-weight: normal; padding: 0; box-sizing: border-box; border: none;">
+            style="background-image: url('{% static 'goals/img/moon/' %}{{ data.moon_image }}');">
             {{ future_age }}
           </a>
         </li>
@@ -38,7 +43,6 @@
   <div class="tab-content mt-3">
     {% for future_age, data in goals_by_age.items %}
     <div class="tab-pane fade {% if future_age == active_age %}show active{% endif %}" id="age{{ future_age }}" role="tabpanel">
-      <h3> 達成率：（達成済の数: {{ data.done_count }}）/（合計: {{ data.total }}件）</h3>
       <div class="goal-item">
         {% for goal in data.goals %}
           <form method="POST" action="{% url 'goals:complete_goal' goal.id %}">

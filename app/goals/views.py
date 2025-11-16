@@ -9,6 +9,7 @@ from collections import defaultdict
 from django.views.decorators.http import require_http_methods
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
+import math
 
 
 User = get_user_model()
@@ -43,6 +44,28 @@ def goals_index(request, user_id=None):
         # その中で達成済の数をカウント
         if goal.is_done:
             goals_by_age[future_age]["done_count"] += 1
+    
+    for future_age, data in goals_by_age.items():
+        done = data.get("done_count", 0)
+        total = data.get("total", 0)
+
+        # 0/x はすべて 0-0.png にする
+        if done == 0 and total > 0:
+            image_file = "0-0.png"
+
+        # 0/0 も 0-0.png
+        elif total == 0:
+            image_file = "0-0.png"
+
+        else:
+            # done > 0 かつ total > 0 のときだけ約分する
+            g = math.gcd(done, total)
+            reduced_done = done // g
+            reduced_total = total // g
+
+            image_file = f"{reduced_done}-{reduced_total}.png"
+
+        data["moon_image"] = image_file
 
     sorted_ages = sorted(goals_by_age.keys())  # 年齢順
     active_age = request.GET.get("active_age")
