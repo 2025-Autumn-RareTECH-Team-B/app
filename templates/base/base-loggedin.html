@@ -22,8 +22,8 @@
     <!-- 季節画像（views.py から渡された current_month 使用） -->
     <img src="{% static season_image %}" alt="季節画像" class="profile-header-icon">
     <!-- ユーザー名受け渡し、メッセージ表示 -->
-    <div>
-        <p><span>{{ user.user_name|default:user.username }}</span> さん！</p><br>
+    <div class="message-container">
+        <p><span>{{ user.user_name|default:user.username }}</span> さん！</p>
         <p>{{ message }}</p>
     </div>
     <!-- ログアウトボタン（右上固定） -->

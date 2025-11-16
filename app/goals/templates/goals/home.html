@@ -10,7 +10,7 @@
 {% endblock %}
 
 {% block main_content %}
-<div style="margin-top: 115px; height: 100px;">
+<div class="page-content">
   <div class="d-flex align-items-center" style="height: 100%;">
     <!-- ＋ボタン -->
     <div class="flex-shrink-0" style="margin-bottom: 20px;">
@@ -43,8 +43,8 @@
   <div class="tab-content mt-3">
     {% for future_age, data in goals_by_age.items %}
     <div class="tab-pane fade {% if future_age == active_age %}show active{% endif %}" id="age{{ future_age }}" role="tabpanel">
+      {% for goal in data.goals %}
       <div class="goal-item">
-        {% for goal in data.goals %}
           <form method="POST" action="{% url 'goals:complete_goal' goal.id %}">
             {% csrf_token %}
             <button type="submit" class="btn p-0 border-0 bg-transparent">
@@ -56,12 +56,12 @@
             </button>
           </form>
           <p>{{ goal.future_month }}</p>
-          <a href="{% url 'goals:goal_detail' goal.id %}" style="color:orange;">
-          <h3>{{ goal.title }}</h3>
+          <a href="{% url 'goals:goal_detail' goal.id %}">
+            <h3>{{ goal.title }}</h3>
           </a>
-        {% endfor %}
+        </div>
+      {% endfor %}
       </div>
-    </div>
     {% endfor %}
   </div>
 </div>
