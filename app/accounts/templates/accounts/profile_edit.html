@@ -8,6 +8,7 @@
 {% block css %}
 {{ block.super }}
 <link rel="stylesheet" href="{% static 'accounts/css/profile_edit.css' %}">
+<link rel="stylesheet" href="{% static 'css/modal.css' %}">
 {% endblock %}
 
 {% block main_content %}
@@ -16,7 +17,7 @@
     <div class="profile-header">
         <a href="{% url 'goals:home' %}" class="cancel-link">キャンセル</a>
         <h2>プロフィール編集</h2>
-        <button type="submit" form="profile-form" class="submit-link">変更</button>
+        <button type="submit" data-bs-toggle="modal" data-bs-target="#profileeditModal{{ user.username }}" class="submit-link">変更</button>
     </div>
 
     <!-- フォーム -->
@@ -56,6 +57,7 @@
         </div>
     </form>
 </div>
+{% include "modal/profile-edit-modal.html" %}
 {% endblock %}
 
 
