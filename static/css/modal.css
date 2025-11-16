@@ -34,3 +34,10 @@
 .initial-modal-container {
     width: 70%;
 }
+
+.logout-button {
+  border: none;
+  background: none;
+  padding-right: 0;
+  margin-right: -10px;
+}
