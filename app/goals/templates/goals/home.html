@@ -4,8 +4,13 @@
     Habi | Home
 {% endblock %}
 
+{% block extra_css %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'goals/css/home.css' %}">
+{% endblock %}
+
 {% block main_content %}
-<div style="margin-top: 115px; height: 100px;">
+<div class="page-content">
   <div class="d-flex align-items-center" style="height: 100%;">
     <!-- ＋ボタン -->
     <div class="flex-shrink-0" style="margin-bottom: 20px;">
@@ -38,9 +43,9 @@
   <div class="tab-content mt-3">
     {% for future_age, data in goals_by_age.items %}
     <div class="tab-pane fade {% if future_age == active_age %}show active{% endif %}" id="age{{ future_age }}" role="tabpanel">
-      <h3> 達成率：（達成済の数: {{ data.done_count }}）/（合計: {{ data.total }}件）</h3>
-      <div class="goal-item">
+      
         {% for goal in data.goals %}
+      <div class="goal-item">
           <form method="POST" action="{% url 'goals:complete_goal' goal.id %}">
             {% csrf_token %}
             <button type="submit" class="btn p-0 border-0 bg-transparent">
@@ -52,11 +57,11 @@
             </button>
           </form>
           <p>{{ goal.future_month }}</p>
-          <a href="{% url 'goals:goal_detail' goal.id %}" style="color:orange;">
+          <a href="{% url 'goals:goal_detail' goal.id %}">
           <h3>{{ goal.title }}</h3>
           </a>
+        </div>
         {% endfor %}
-      </div>
     </div>
     {% endfor %}
   </div>
