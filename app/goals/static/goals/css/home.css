@@ -12,6 +12,8 @@
     position: relative;
     padding: 0;
     box-sizing: border-box;
+}
+
 body {
     background: var(--white) !important;
 }
