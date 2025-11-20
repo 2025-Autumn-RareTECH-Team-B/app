@@ -12,7 +12,6 @@
 {% endblock %}
 
 {% block main_content %}
-<div class="page-content">
 <!-- 上部ナビ(ボタン部分) -->
     <div class="profile-header">
         <a href="{% url 'goals:home' %}" class="cancel-link">キャンセル</a>
@@ -56,7 +55,6 @@
             <input type="date" id="birthday" name="birthday" value="{{ user.birthday|date:'Y-m-d' }}">
         </div>
     </form>
-</div>
 {% include "modal/profile-edit-modal.html" %}
 {% endblock %}
 

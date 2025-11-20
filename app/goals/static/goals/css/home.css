@@ -12,13 +12,13 @@
     position: relative;
     padding: 0;
     box-sizing: border-box;
+}
+
 body {
     background: var(--white) !important;
 }
 
 .page-content {
-    padding-top: 118px !important;  
-    padding-bottom: 90px;
     background-color: var(--white);
     margin: 0 13px;
 }

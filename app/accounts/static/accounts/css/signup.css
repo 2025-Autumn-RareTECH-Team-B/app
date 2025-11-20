@@ -3,17 +3,18 @@
 .signup-container {
     display: flex;
     justify-content: center;
-    align-items: center;
-    min-height: 100vh;
+    align-items: flex-start;
+    min-height: 100dvh;
+    padding-top: 40px;
+    overflow-y: auto;
 }
 
 /* ===== カード ===== */
 .signup-card {
-    width: 100%;
+    width: 90%;
     max-width: 400px;
     background: var(--white);
     text-align: left;
-    max-height: 90vh;
     transform: scale(0.9);
     transform-origin: center center;
 }
@@ -86,6 +87,7 @@ label {
     width: 100%;
     padding: 14px;
     margin-top: 15px;
+    margin-bottom: 40px;
     border: 2px solid var(--orange);
     border-radius: 30px;
     color: var(--black);
@@ -99,6 +101,12 @@ label {
     background-color: var(--white);
 }
 
+@media (max-height: 800px) {
+    .login-container {
+        transform: scale(0.9) translateY(-5%);
+    }
+}
+/*
 @media (max-height: 800px) {
 .signup-card {
     transform: scale(0.9);
@@ -115,9 +123,9 @@ label {
 .signup-card {
     transform: scale(0.8);
 }
-}
+} */
 
-/* ===== スマホ対応 ===== */
+/* ===== スマホ対応 ===== 
 @media (max-width: 480px) {
 .signup-card {
     max-width: 90%;
@@ -130,4 +138,4 @@ label {
     font-size: 16px;
     padding: 12px;
 }
-}
+} */
