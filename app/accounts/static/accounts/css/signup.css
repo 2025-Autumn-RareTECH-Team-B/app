@@ -33,7 +33,7 @@ label {
     display: block;
     font-size: 14px;
     margin-bottom: 5px;
-    color: var(--black);
+    color: var(--brown);
 }
 
 /* ===== 入力グループ ===== */
@@ -68,7 +68,7 @@ label {
     padding: 14px;
     margin-top: 20px;
     background-color: var(--orange);
-    color: var(--black);
+    color: var(--brown);
     border: none;
     border-radius: 30px;
     font-size: 18px;
@@ -90,7 +90,7 @@ label {
     margin-bottom: 40px;
     border: 2px solid var(--orange);
     border-radius: 30px;
-    color: var(--black);
+    color: var(--brown);
     text-align: center;
     text-decoration: none;
     font-size: 18px;

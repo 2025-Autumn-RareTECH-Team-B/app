@@ -119,14 +119,14 @@ label {
 
 .login-button {
     background-color: var(--orange);
-    color: var(--black);
+    color: var(--brown);
     border: none;
     font-weight: normal;
 }
 
 .signup-button {
     border: 2px solid var(--orange);
-    color: var(--black);
+    color: var(--brown);
     background: var(--white);
 }
 
