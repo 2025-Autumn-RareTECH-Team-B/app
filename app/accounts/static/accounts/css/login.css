@@ -2,14 +2,28 @@
 body {
     background-color: var(--white);
     font-family: 'ABeeZee', sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     min-height: 100vh;
     margin: 0;
     padding: 0;
-    overflow: hidden; 
+    /* overflow: hidden; */
 }
+
+.login-body .message-container {
+    position: fixed;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    z-index: 9999;
+}
+.login-body {
+    display:flex;
+    justify-content:center;
+    align-items:flex-start; /* ← centerから変更 */
+    min-height:100dvh;      /* ← iPhone用 */
+    padding-top:40px;
+}
+
 
 /* コンテナ */
 .login-container {
@@ -34,7 +48,7 @@ body {
     bottom: 24px;
     top: 450px;
     left: 50%;
-    width: 85%;
+    width: 90%;
     font-size: 20px;
     transform: translate(-50%, -50%);
     color: var(--brown);
@@ -51,7 +65,7 @@ label {
     margin: 15px auto 5px;
     color: var(--gray);
     text-align: left;
-    width: 85%;
+    width: 88%;
 }
 
 /* 入力フィールド */
@@ -67,7 +81,7 @@ label {
     border-radius: 8px;
     padding: 10px 12px;
     margin: 0 auto 18px;
-    width: 85%;
+    width: 90%;
     background-color: var(--white);
 }
 
@@ -92,7 +106,7 @@ label {
 .login-button,
 .signup-button {
     display: block;
-    width: 85%;
+    width: 90%;
     padding: 12px;
     margin: 12px auto 0;
     border-radius: 25px;
@@ -120,6 +134,14 @@ label {
   transform-origin: center top; /* ← 縮小時の基準点 */
 }
 
+@media (max-height: 800px) {
+    .login-container {
+        transform: scale(0.9) translateY(-5%);
+    }
+}
+
+
+/*
 @media (max-height: 800px) {
 .login-container {
     transform: scale(0.9) translateY(-5%);
@@ -149,5 +171,5 @@ label {
     transform: scale(0.73) translateY(-9%);
 }
 }
-
+*/
 

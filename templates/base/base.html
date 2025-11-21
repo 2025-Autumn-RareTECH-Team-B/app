@@ -33,7 +33,7 @@
         {% block css %}{% endblock %}
     </head>
 
-    <body>
+    <body class="{% block body_class %}{% endblock %}">
         {% if messages %}
             <div class="message-container">
                 {% for message in messages %}

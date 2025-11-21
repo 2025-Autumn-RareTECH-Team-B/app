@@ -1,5 +1,4 @@
 .page-content {
-    padding-top: 118px !important;   /* ← これを追加！ヘッダーの高さぶん */
     background-color: var(--white);
     margin: 0 13px;
 }

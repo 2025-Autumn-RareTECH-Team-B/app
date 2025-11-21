@@ -29,7 +29,7 @@ body {
     padding: 0;
 }
 
-.message-container {
+/* .message-container {
     position: fixed;
     top: 20px;
     left: 50%;
@@ -37,4 +37,4 @@ body {
     z-index: 9999;
     width: 90%;
     max-width: 600px;
-}
+} */
