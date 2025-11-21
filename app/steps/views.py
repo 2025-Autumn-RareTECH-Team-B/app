@@ -52,7 +52,12 @@ def step_delete(request, step_id):
 @require_http_methods(["POST"])
 def complete_step(request, step_id):
     step = get_object_or_404(StepsModel, id=step_id, goals__user=request.user)
+    goal = get_object_or_404(GoalsModel, id=step.goals.id, user=request.user)
     step.is_done = not step.is_done
     step.save()
+    # stepをまた未達成に戻したら、長期目標も未達成に戻る
+    if step.is_done is False:
+        goal.is_done = False
+        goal.save()
     return redirect("goals:goal_detail", goal_id=step.goals.id)
 

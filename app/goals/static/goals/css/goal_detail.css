@@ -99,13 +99,28 @@ body {
     flex-shrink: 0;   /* ← 幅を固定 */
 }
 
+/* テキスト部分は基本は中央に */
+.step-items .step-title {  
+    flex-grow: 1;
+    margin: 0 10px;
+    word-break: break-word;
+    text-align: left;  /* ← centerではなくleftに */
+    display: flex;
+    justify-content: center;  /* ← 短い文字は中央に */
+    align-items: center;
+}
+
 /* 真ん中のテキスト部分を伸縮OKに */
 .step-items p,
-.step-items span,
-.step-items div {
+.step-items span {
     flex-grow: 1;
     margin: 0 10px; /* 左右のアイコンと余白を確保 */
     word-break: break-word; /* 長い文章も折り返す */
+}
+
+/* 完了済みステップの文字の色 */
+.step-title.step-done {
+    color: #9DD1CB;
 }
 
 /* チェックアイコン（未完・完了）の右側に余白を追加 */

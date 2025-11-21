@@ -226,6 +226,12 @@ def complete_goal(request, goal_id):
     goal = get_object_or_404(GoalsModel, id=goal_id, user=request.user)
     goal.is_done = not goal.is_done
     goal.save()
+    # 長期目標が達成済みになったら紐づく全てのstepsを達成済みにする
+    if goal.is_done is True:
+        StepsModel.objects.filter(goals=goal).update(is_done=True)
+    else:
+        pass
+
     # 完了ボタン押した goal の future_age を取得
     birthday = request.user.birthday
     future_age = goal.limit_age.year - birthday.year - ((goal.limit_age.month, goal.limit_age.day) < (birthday.month, birthday.day))
