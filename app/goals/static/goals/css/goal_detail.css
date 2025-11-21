@@ -81,6 +81,7 @@ body {
 .goals_select p:first-child,   /* 月の部分 */
 .goals_select button {         /* 三点リーダー */
     flex-shrink: 0;
+    color: var(--brown);
 }
 
 .goals_select p:first-child {
@@ -91,6 +92,7 @@ body {
 .goals_select p:nth-child(2) {
     margin: 0 7px; /* 左右に余白 */
     word-break: break-word; /* 長い文も折り返し */
+    color: var(--brown);
 }
 
 /* 左右のボタンを固定幅にして潰れないようにする */
