@@ -67,13 +67,20 @@
             </button>
         </form>
         <!-- ステップのタイトル -->
-        {{ step.title }}
+        <div class="step-title {% if step.is_done %}step-done{% endif %}">
+            {{ step.title }}
+        </div>
         <!-- ステップの削除に進む3点リーダー -->
-        <button type="button" data-bs-toggle="modal" data-bs-target="#stepdeleteModal{{ step.id }}" class="btn p-0 border-0 bg-transparent">
-            <img src="{% static 'goals/img/green3pointleader.png' %}" 
-                alt="３点リーダー緑色" 
-            >
-        </button>
+        <!-- ステップが達成済みなら、３点リーダーは画像としてあるだけ -->
+        {% if step.is_done %}
+             <img src="{% static 'goals/img/lightgreen3pointleader.png' %}" alt="3点リーダー薄緑色">
+        {% else %}
+            <button type="button" data-bs-toggle="modal" data-bs-target="#stepdeleteModal{{ step.id }}" class="btn p-0 border-0 bg-transparent">
+                <img src="{% static 'goals/img/green3pointleader.png' %}" 
+                    alt="３点リーダー緑色" 
+                >
+            </button>
+        {% endif %}
   </div>
   {% include "modal/steps-deletemodal.html" with step=step %}
 {% empty %}
