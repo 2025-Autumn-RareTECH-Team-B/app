@@ -44,10 +44,12 @@
 
 <!-- ===== Footer ===== -->
 <footer>
-    <!-- 左端（リンクなし・画像だけ） -->
+    <!-- 左端（リンク先、準備中画像だけ） -->
+    <a href="{% url 'goals:life_map' %}">
     <img src="{% static 'img/life_map_icon.png' %}" 
         alt="Left icon" 
     >
+    </a>
 
     <!-- 真ん中（homeに遷移） -->
     <a href="{% url 'goals:home' %}">

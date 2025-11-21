@@ -240,3 +240,7 @@ def complete_goal(request, goal_id):
     url = reverse("goals:home") + f"?active_age={future_age}"
     return redirect(url)
 
+@login_required
+@require_http_methods(['GET'])
+def life_map(request):
+    return render(request, "goals/life-map.html")
