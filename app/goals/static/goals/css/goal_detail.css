@@ -110,6 +110,7 @@ body {
     display: flex;
     justify-content: center;  /* ← 短い文字は中央に */
     align-items: center;
+    color: var(--brown);
 }
 
 /* 真ん中のテキスト部分を伸縮OKに */
