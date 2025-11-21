@@ -21,7 +21,6 @@ body {
     justify-content:center;
     align-items:flex-start; /* ← centerから変更 */
     min-height:100dvh;      /* ← iPhone用 */
-    padding-top:40px;
 }
 
 
@@ -38,7 +37,7 @@ body {
 .logo-area {
   background: no-repeat center top;
   background-size: contain; /* または cover */
-  height: 500px; /* 見た目に合わせて調整 */
+  height: 450px; /* 見た目に合わせて調整 */
   position: relative;
   margin-bottom: 10px;
 }
@@ -46,7 +45,7 @@ body {
 .subtitle {
     position: relative;
     bottom: 24px;
-    top: 450px;
+    top: 400px;
     left: 50%;
     width: 90%;
     font-size: 20px;
