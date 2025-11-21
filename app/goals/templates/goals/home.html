@@ -61,6 +61,11 @@
         </div>
       {% endfor %}
       </div>
+    {% empty %}
+      <div class="text-center text-muted my-4">
+        <p>長期目標が登録されていません。</p>
+        <p>早速登録してみましょう！</p>
+      </div>
     {% endfor %}
   </div>
 {% endblock %}
