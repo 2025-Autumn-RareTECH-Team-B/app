@@ -16,7 +16,8 @@ RUN pip install --upgrade pip \
 COPY ./app /code/app
 COPY ./manage.py /code/manage.py
 COPY ./templates /code/templates
+COPY ./static /code/static
 #静的ファイルをまとめる
-RUN python manage.py collectstatic --noinput || true
+#RUN python manage.py collectstatic --noinput || true
 #Gunicorn起動コマンド
-CMD ["gunicorn", "app.wsgi:application", "--chdir", "/code/app", "--bind", "0.0.0.0:8000"]
+CMD ["sh", "-c", "python manage.py collectstatic --noinput && gunicorn app.wsgi:application --chdir /code/app --bind 0.0.0.0:8000 --access-logfile /var/log/app/gunicorn.log --error-logfile /var/log/app/gunicorn.log"]

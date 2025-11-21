@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-load_dotenv(BASE_DIR / ".env")
+load_dotenv(BASE_DIR / ".env.prod")
 
 SECRET_KEY = os.getenv("SECRET_KEY")
 DEBUG = os.getenv("DEBUG", "False").lower() in ("true", "1", "yes")
@@ -69,7 +69,7 @@ DATABASES = {
         'NAME': os.getenv("DB_NAME"),
         'USER': os.getenv("DB_USER"),
         'PASSWORD': os.getenv("DB_PASSWORD"),
-        'HOST': 'db',
+        'HOST': 'habi-db.c3aa6mwyiyfq.ap-northeast-1.rds.amazonaws.com',
         'PORT': '3306',
     }
 }
@@ -122,13 +122,40 @@ STATIC_ROOT = BASE_DIR / "staticfiles" #本番用
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CSRF_TRUSTED_ORIGINS = [
-
-    'http://0.0.0.0:8000',
-
-    'http://localhost:8000',
-
-    'http://127.0.0.1:8000',
+    "https://rt-habi.com",
+    "https://www.rt-habi.com",
+    "https://habi-alb-1083913842.ap-northeast-1.elb.amazonaws.com",
 ]
 #本番はCSRF_TRUSTED_ORIGINSにドメイン名とALBに変更
 LOGIN_URL = "/login/"
+
+#Django Logging(for CloudWatch)
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+
+    "formatters": {
+        "verbose": {
+            "format": "[{asctime}] {levelname} {name} {message}",
+            "style": "{",
+        },
+    },
+
+    "handlers": {
+        "file": {
+            "level": "INFO",
+            "class": "logging.FileHandler",
+            "filename": "/var/log/app/django.log",  #CloudWatch Agentが読む場所
+            "formatter": "verbose",
+        },
+    },
+
+    "loggers": {
+        "django": {
+            "handlers": ["file"],
+            "level": "INFO",
+            "propagate": True,
+        },
+    },
+}
 
