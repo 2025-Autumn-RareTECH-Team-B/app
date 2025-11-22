@@ -128,6 +128,8 @@ CSRF_TRUSTED_ORIGINS = [
 ]
 #本番はCSRF_TRUSTED_ORIGINSにドメイン名とALBに変更
 LOGIN_URL = "/login/"
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
 
 #Django Logging(for CloudWatch)
 LOGGING = {
