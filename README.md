@@ -84,3 +84,9 @@ Djangoで使用する環境変数を、プロジェクト直下に `.env` ファ
 #### CORS設定
 外部から本アプリのAPIを勝手に呼ばれることを防ぎたい時に設定する
 - 対策：外部からのアクセスを許可する場合には、django-cors-headersというミドルウェアを使用して許可するORIGINだけを設定する→本アプリは全て同一originだけのやり取りであり、将来的にも同様の予定であるため、現時点での設定は不要、という認識です。
+
+> 参考資料
+> - 安全なウェブサイトの作り方
+> https://www.ipa.go.jp/security/vuln/websecurity/index.html
+> - Django公式ドキュメント
+> https://docs.djangoproject.com/ja/5.2/topics/security/
