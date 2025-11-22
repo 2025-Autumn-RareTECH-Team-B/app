@@ -88,5 +88,5 @@ Djangoで使用する環境変数を、プロジェクト直下に `.env` ファ
 > 参考資料
 > - 安全なウェブサイトの作り方
 > <https://www.ipa.go.jp/security/vuln/websecurity/index.html>
-> - Django公式ドキュメント
+> - Django公式ドキュメント    
 > <https://docs.djangoproject.com/ja/5.2/topics/security/>
