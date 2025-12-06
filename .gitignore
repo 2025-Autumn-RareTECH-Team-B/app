@@ -6,3 +6,5 @@ cors-config.json
 bucket-policy.json
 *.pyc
 __pycache__/
+logs/
+*.log
