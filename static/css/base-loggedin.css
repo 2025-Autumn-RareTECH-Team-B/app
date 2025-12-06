@@ -136,3 +136,17 @@ footer {
     padding: 12px;
 }
 }
+.loggedin-message {
+
+    position: fixed !important;
+
+    top: 130px !important; /* ← header の高さに応じて調整 */
+
+    left: 50% !important;
+
+    transform: translateX(-50%) !important;
+
+    width: 90% !important;
+
+    z-index: 9999 !important;
+}
