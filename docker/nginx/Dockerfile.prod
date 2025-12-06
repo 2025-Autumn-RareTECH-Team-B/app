@@ -11,4 +11,3 @@ COPY ./docker/nginx/conf.d/habi.conf /etc/nginx/conf.d/habi.conf
 #COPY ./staticfiles /code/staticfiles
 
 # Nginxが80番で待ち受けることを明示
-EXPOSE 80
