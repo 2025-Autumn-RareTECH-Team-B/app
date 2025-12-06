@@ -17,7 +17,7 @@ services:
     container_name: nginx-prod
     build:
       context: .
-      dockerfile: ./docker/nginx/Dockerfile.prod
+      dockerfile: ./docker/nginx/Dockerfile
     ports:
       - "80:80"
     volumes:
