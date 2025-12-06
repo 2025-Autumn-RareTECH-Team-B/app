@@ -28,4 +28,3 @@ services:
         condition: service_started
 
 volumes:
-  static_volume:
