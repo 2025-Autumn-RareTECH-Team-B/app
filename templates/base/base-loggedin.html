@@ -1,12 +1,12 @@
 {% extends "base/base.html" %}
 {% load static %}
-
+{% block body_class %}loggedin-body{% endblock %}
 {% block css %}
     <!-- Bootstrap（CSS） -->
-    <link 
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" 
-        rel="stylesheet" 
-        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" 
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
         crossorigin="anonymous"
     >
     <!-- ログイン後の共通レイアウトCSS（これが抜けてた） -->
@@ -28,17 +28,50 @@
     </div>
     <!-- ログアウトボタン（右上固定） -->
     <button type="button" data-bs-toggle="modal" data-bs-target="#logoutModal" class="logout-button">
-        <img src="{% static 'img/logout.png' %}" 
-            alt="Logout" 
+        <img src="{% static 'img/logout.png' %}"
+            alt="Logout"
         >
     </button>
   </div>
 </header>
+{% if messages %}
+            <div class="loggedin-message">
 
+                {% for message in messages %}
 
+                    <div class="alert
+
+                    {% if 'error' in message.tags %}
+
+                        alert-danger
+
+                    {% elif 'debug' in message.tags %}
+
+                        alert-secondary
+
+                    {% else %}
+
+                        alert-{{ message.tags }}
+
+                    {% endif %}
+
+                    alert-dismissible fade show" role="alert">
+
+                        {{ message }}
+
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        {% endif %}
 <!-- ===== Main Content ===== -->
 <main class="page-content">
 {% block main_content %}
+        {{ block.super }}
 {% endblock %}
 </main>
 
@@ -46,30 +79,30 @@
 <footer>
     <!-- 左端（リンク先、準備中画像だけ） -->
     <a href="{% url 'goals:life_map' %}">
-    <img src="{% static 'img/life_map_icon.png' %}" 
-        alt="Left icon" 
+    <img src="{% static 'img/life_map_icon.png' %}"
+        alt="Left icon"
     >
     </a>
 
     <!-- 真ん中（homeに遷移） -->
     <a href="{% url 'goals:home' %}">
-        <img src="{% static 'img/home_icon.png' %}" 
-            alt="Home" 
+        <img src="{% static 'img/home_icon.png' %}"
+            alt="Home"
         >
     </a>
 
     <!-- 右端（プロフィール編集に遷移） -->
     <a href="{% url 'profile_edit' user.username %}">
-        <img src="{% static 'img/profile_icon.png' %}" 
-            alt="Profile Edit" 
+        <img src="{% static 'img/profile_icon.png' %}"
+            alt="Profile Edit"
         >
     </a>
 </footer>
 
 <!-- Bootstrap JS -->
-<script 
-    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" 
-    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" 
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
     crossorigin="anonymous">
 </script>
 {% block extra_js %}
