@@ -2,3 +2,5 @@ Django==5.2
 mysqlclient
 python-dotenv
 gunicorn
+boto3
+django-storages
